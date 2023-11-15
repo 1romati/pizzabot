@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Pizzabot</title>
+  </head>
+  <body>
+    <!-- Print in console -->
+    <script src="pizzabot.js" charset="utf-8"></script>
+
+    <!-- Print in HTML -->
+    <h1>Welcome to PizzaBot!</h1>
+    <h2>On the menu today:</h2>
+    <h3>
+      1. Vegetarian Pizza<br />
+      2. Hawaiian Pizza<br />
+      3. Pepperoni Pizza
+    </h3>
+
+    <form id="pizzaForm">
+      <label for="pizzaType">Select your pizza type:</label><br />
+      <select id="pizzaType" name="pizzaType">
+        <option value="Vegetarian Pizza">Vegetarian Pizza</option>
+        <option value="Hawaiian Pizza">Hawaiian Pizza</option>
+        <option value="Pepperoni Pizza">Pepperoni Pizza</option>
+        <option value="Seafood Pizza">Seafood Pizza</option>
+      </select>
+      <br /><br />
+      <label for="quantity">How many pizzas you want to order?</label><br />
+      <input
+        type="number"
+        id="quantity"
+        name="quantity"
+        min="1"
+        max="10"
+        required
+      />
+      <br /><br />
+      <button type="submit">Place Order</button>
+    </form>
+    <br />
+    <div id="response"></div>
+
+    <script>
+      document
+        .getElementById("pizzaForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+
+          const orderName = document.getElementById("pizzaType").value;
+          const orderQuantity = parseInt(
+            document.getElementById("quantity").value
+          );
+
+          const menuItems = [
+            "Vegetarian Pizza",
+            "Hawaiian Pizza",
+            "Pepperoni Pizza",
+          ];
+          if (menuItems.includes(orderName)) {
+            const pizzaPrice = 80;
+            const orderTotal = pizzaPrice * orderQuantity;
+
+            let timeToCook;
+            if (orderQuantity >= 1 && orderQuantity <= 2) {
+              timeToCook = 10;
+            } else if (orderQuantity >= 3 && orderQuantity <= 5) {
+              timeToCook = 15;
+            } else {
+              timeToCook = 20;
+            }
+
+            const responseText = `Great, I'll get started on your ${orderName} right away. It will cost ${orderTotal} kr. The pizzas will take ${timeToCook} minutes.`;
+            document.getElementById("response").textContent = responseText;
+          } else {
+            document.getElementById("response").textContent =
+              "Sorry, we don't have that pizza on our menu today. Please choose from the other options.";
+          }
+        });
+    </script>
+  </body>
+</html>
